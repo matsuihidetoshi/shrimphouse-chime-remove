@@ -7,10 +7,6 @@
     "provider": {
       "name": "aws",
       "runtime": "nodejs14.x",
-      "apiGateway": {
-        "minimumCompressionSize": 1024,
-        "shouldStartNameWithService": true
-      },
       "environment": {
         "AWS_NODEJS_CONNECTION_REUSE_ENABLED": "1"
       },
@@ -182,7 +178,7 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/shrimphouse-chime-remove/beta/1614523107218-2021-02-28T14:38:27.218Z/shrimphouse-chime-remove.zip"
+                "S3Key": "serverless/shrimphouse-chime-remove/beta/1614527079786-2021-02-28T15:44:39.786Z/shrimphouse-chime-remove.zip"
               },
               "Handler": "src/functions/remove/handler.main",
               "Runtime": "nodejs14.x",
@@ -205,172 +201,14 @@
               "RemoveLogGroup"
             ]
           },
-          "RemoveLambdaVersion6vqzfqUqfF6wCBgMQ88NUZ6Y77QOYxwBSUyagP8FSDY": {
+          "RemoveLambdaVersion9g6tIyjRvL4odKlOnQscsHCJAERcf7NnF2iTtnynmk4": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "RemoveLambdaFunction"
               },
-              "CodeSha256": "xhkiLd8BGj5ghgXWRrgSmBEJQYmOHkbfw60Hrsqc9Es="
-            }
-          },
-          "ApiGatewayRestApi": {
-            "Type": "AWS::ApiGateway::RestApi",
-            "Properties": {
-              "Name": "shrimphouse-chime-remove-beta",
-              "EndpointConfiguration": {
-                "Types": [
-                  "EDGE"
-                ]
-              },
-              "Policy": "",
-              "MinimumCompressionSize": 1024
-            }
-          },
-          "ApiGatewayResourceHello": {
-            "Type": "AWS::ApiGateway::Resource",
-            "Properties": {
-              "ParentId": {
-                "Fn::GetAtt": [
-                  "ApiGatewayRestApi",
-                  "RootResourceId"
-                ]
-              },
-              "PathPart": "hello",
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              }
-            }
-          },
-          "ApiGatewayMethodHelloPost": {
-            "Type": "AWS::ApiGateway::Method",
-            "Properties": {
-              "HttpMethod": "POST",
-              "RequestParameters": {},
-              "ResourceId": {
-                "Ref": "ApiGatewayResourceHello"
-              },
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              },
-              "ApiKeyRequired": false,
-              "AuthorizationType": "NONE",
-              "Integration": {
-                "IntegrationHttpMethod": "POST",
-                "Type": "AWS_PROXY",
-                "Uri": {
-                  "Fn::Join": [
-                    "",
-                    [
-                      "arn:",
-                      {
-                        "Ref": "AWS::Partition"
-                      },
-                      ":apigateway:",
-                      {
-                        "Ref": "AWS::Region"
-                      },
-                      ":lambda:path/2015-03-31/functions/",
-                      {
-                        "Fn::GetAtt": [
-                          "RemoveLambdaFunction",
-                          "Arn"
-                        ]
-                      },
-                      "/invocations"
-                    ]
-                  ]
-                }
-              },
-              "MethodResponses": [],
-              "RequestValidatorId": {
-                "Ref": "ApiGatewayHelloModelValidator"
-              },
-              "RequestModels": {
-                "application/json": {
-                  "Ref": "ApiGatewayMethodHelloPostApplicationJsonModel"
-                }
-              }
-            }
-          },
-          "ApiGatewayMethodHelloPostApplicationJsonModel": {
-            "Type": "AWS::ApiGateway::Model",
-            "Properties": {
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              },
-              "ContentType": "application/json",
-              "Schema": {
-                "type": "object",
-                "properties": {
-                  "name": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "name"
-                ]
-              }
-            }
-          },
-          "ApiGatewayHelloModelValidator": {
-            "Type": "AWS::ApiGateway::RequestValidator",
-            "Properties": {
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              },
-              "ValidateRequestBody": true,
-              "ValidateRequestParameters": true
-            }
-          },
-          "ApiGatewayDeployment1614523098210": {
-            "Type": "AWS::ApiGateway::Deployment",
-            "Properties": {
-              "RestApiId": {
-                "Ref": "ApiGatewayRestApi"
-              },
-              "StageName": "beta"
-            },
-            "DependsOn": [
-              "ApiGatewayMethodHelloPost"
-            ]
-          },
-          "RemoveLambdaPermissionApiGateway": {
-            "Type": "AWS::Lambda::Permission",
-            "Properties": {
-              "FunctionName": {
-                "Fn::GetAtt": [
-                  "RemoveLambdaFunction",
-                  "Arn"
-                ]
-              },
-              "Action": "lambda:InvokeFunction",
-              "Principal": "apigateway.amazonaws.com",
-              "SourceArn": {
-                "Fn::Join": [
-                  "",
-                  [
-                    "arn:",
-                    {
-                      "Ref": "AWS::Partition"
-                    },
-                    ":execute-api:",
-                    {
-                      "Ref": "AWS::Region"
-                    },
-                    ":",
-                    {
-                      "Ref": "AWS::AccountId"
-                    },
-                    ":",
-                    {
-                      "Ref": "ApiGatewayRestApi"
-                    },
-                    "/*/*"
-                  ]
-                ]
-              }
+              "CodeSha256": "hvxzKrzgIuY2Zywlu/09R+Dkz7dzqKKLyTcDCcmEbz4="
             }
           }
         },
@@ -383,30 +221,7 @@
           "RemoveLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "RemoveLambdaVersion6vqzfqUqfF6wCBgMQ88NUZ6Y77QOYxwBSUyagP8FSDY"
-            }
-          },
-          "ServiceEndpoint": {
-            "Description": "URL of the service endpoint",
-            "Value": {
-              "Fn::Join": [
-                "",
-                [
-                  "https://",
-                  {
-                    "Ref": "ApiGatewayRestApi"
-                  },
-                  ".execute-api.",
-                  {
-                    "Ref": "AWS::Region"
-                  },
-                  ".",
-                  {
-                    "Ref": "AWS::URLSuffix"
-                  },
-                  "/beta"
-                ]
-              ]
+              "Ref": "RemoveLambdaVersion9g6tIyjRvL4odKlOnQscsHCJAERcf7NnF2iTtnynmk4"
             }
           }
         }
@@ -508,22 +323,7 @@
     "functions": {
       "remove": {
         "handler": "src/functions/remove/handler.main",
-        "events": [
-          {
-            "http": {
-              "method": "post",
-              "path": "hello",
-              "request": {
-                "schema": {
-                  "application/json": {
-                    "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"ApiGatewayMethodHelloPostApplicationJsonModel\"][\"Properties\"][\"Schema\"]"
-                  }
-                }
-              },
-              "integration": "AWS_PROXY"
-            }
-          }
-        ],
+        "events": [],
         "name": "shrimphouse-chime-remove-beta-remove",
         "package": {
           "artifact": ".serverless/shrimphouse-chime-remove.zip"
@@ -532,7 +332,7 @@
         "timeout": 6,
         "runtime": "nodejs14.x",
         "vpc": {},
-        "versionLogicalId": "RemoveLambdaVersion6vqzfqUqfF6wCBgMQ88NUZ6Y77QOYxwBSUyagP8FSDY"
+        "versionLogicalId": "RemoveLambdaVersion9g6tIyjRvL4odKlOnQscsHCJAERcf7NnF2iTtnynmk4"
       }
     },
     "configValidationMode": "warn",
@@ -559,7 +359,7 @@
     "isDashboardMonitoringPreconfigured": false
   },
   "package": {
-    "artifactDirectoryName": "serverless/shrimphouse-chime-remove/beta/1614523107218-2021-02-28T14:38:27.218Z",
+    "artifactDirectoryName": "serverless/shrimphouse-chime-remove/beta/1614527079786-2021-02-28T15:44:39.786Z",
     "artifact": ""
   }
 }
