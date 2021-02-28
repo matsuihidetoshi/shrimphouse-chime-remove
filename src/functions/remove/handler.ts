@@ -30,8 +30,6 @@ const remove: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async (event: 
 
   records.forEach((record: any) => {
     if (record.eventName === 'REMOVE') {
-      console.log('*****remove meeting id*****')
-      console.log(record.dynamodb.OldImage.meetingId.S)
       chime.deleteMeeting({MeetingId: record.dynamodb.OldImage.meetingId.S,}, function(err: any, data: any) {
         if (err) console.log(err, err.stack)
         else console.log(data)
